@@ -1,0 +1,6 @@
+This folder is intentionally empty.
+
+Every visual in this build is rendered with CSS, inline SVG, or Canvas —
+no bitmap image assets were needed. This folder is kept so the project
+matches the requested structure and is ready if you want to drop in your
+own images (e.g. real planet textures or photos) later.

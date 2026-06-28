@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beyond Earth — Journey Through the Future of Space Civilization</title>
+  <meta name="description" content="An immersive scroll experience through humanity's future among the stars: Mars colonies, black holes, and the technology that gets us there." />
+
+  <!-- Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (data/labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================= -->
+  <!-- LOADING SCREEN -->
+  <!-- ============================= -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-mark">BE</div>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loaderBarFill"></div>
+      </div>
+      <div class="loader-pct" id="loaderPct">0%</div>
+    </div>
+  </div>
+
+  <!-- ============================= -->
+  <!-- PERSISTENT UI: cursor, progress, nav, back-to-top -->
+  <!-- ============================= -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+  </div>
+
+  <header class="navbar" id="navbar">
+    <a href="#hero" class="nav-logo">
+      <span class="nav-logo-mark">＊</span>
+      <span>BEYOND EARTH</span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#solar" data-nav>Solar System</a>
+      <a href="#mars" data-nav>Mars Colony</a>
+      <a href="#blackhole" data-nav>Black Hole</a>
+      <a href="#tech" data-nav>Technology</a>
+      <a href="#timeline" data-nav>Timeline</a>
+      <a href="#gallery" data-nav>Gallery</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <main id="main">
+
+    <!-- ============================= -->
+    <!-- HERO -->
+    <!-- ============================= -->
+    <section class="hero" id="hero" aria-label="Introduction">
+      <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+      <div class="hero-nebula hero-nebula--a" aria-hidden="true"></div>
+      <div class="hero-nebula hero-nebula--b" aria-hidden="true"></div>
+
+      <div class="hero-layer hero-layer--far" data-depth="0.15" aria-hidden="true"></div>
+      <div class="hero-layer hero-layer--mid" data-depth="0.3" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">TECHFEST · YEAR ONE OF MANY</p>
+        <h1 class="hero-title">
+          <span class="hero-title-line" data-reveal>BEYOND</span>
+          <span class="hero-title-line hero-title-line--accent" data-reveal>EARTH</span>
+        </h1>
+        <p class="hero-subtitle">Scroll to discover humanity's future.</p>
+        <a href="#solar" class="hero-cta">
+          <span>Begin the Journey</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-astronaut" id="heroAstronaut" aria-hidden="true">
+        <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="210" rx="46" ry="10" fill="#3FE0E5" opacity="0.08"/>
+          <g class="astro-tether" stroke="#3FE0E5" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 6">
+            <path d="M100 60 Q 60 20, 10 0"/>
+          </g>
+          <ellipse cx="100" cy="150" rx="34" ry="46" fill="url(#suitGrad)"/>
+          <circle cx="100" cy="78" r="38" fill="url(#helmetGrad)"/>
+          <circle cx="100" cy="78" r="38" fill="none" stroke="#3FE0E5" stroke-width="2" opacity="0.6"/>
+          <ellipse cx="92" cy="72" rx="14" ry="10" fill="#0A0C1A" opacity="0.5"/>
+          <path d="M70 130 Q 40 140, 35 175" stroke="#9FB3C8" stroke-width="14" stroke-linecap="round"/>
+          <path d="M130 130 Q 162 120, 168 95" stroke="#9FB3C8" stroke-width="14" stroke-linecap="round"/>
+          <path d="M85 190 Q 80 215, 70 230" stroke="#9FB3C8" stroke-width="15" stroke-linecap="round"/>
+          <path d="M115 190 Q 122 215, 132 230" stroke="#9FB3C8" stroke-width="15" stroke-linecap="round"/>
+          <rect x="84" y="128" width="32" height="22" rx="6" fill="#7B5CFF" opacity="0.85"/>
+          <defs>
+            <linearGradient id="suitGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E8EAF2"/>
+              <stop offset="100%" stop-color="#9FB3C8"/>
+            </linearGradient>
+            <radialGradient id="helmetGrad" cx="0.4" cy="0.35" r="0.7">
+              <stop offset="0%" stop-color="#3FE0E5" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#0A0C1A"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <a href="#solar" class="scroll-cue" aria-label="Scroll down">
+        <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+        <span class="scroll-cue-label">SCROLL</span>
+      </a>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 2: SOLAR SYSTEM -->
+    <!-- ============================= -->
+    <section class="section solar" id="solar" aria-label="The Solar System">
+      <div class="section-bg-stars" aria-hidden="true"></div>
+
+      <div class="section-head">
+        <p class="section-eyebrow">SECTION 01 / NAVIGATION</p>
+        <h2 class="section-title">Our Solar Neighborhood</h2>
+        <p class="section-desc">Eight worlds, one shared orbit around a single star. Each carries a different chapter of where we're headed next.</p>
+      </div>
+
+      <div class="orbit-stage" id="orbitStage" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="orbit-ring orbit-ring--1"><div class="planet planet--mercury" data-planet="mercury"></div></div>
+        <div class="orbit-ring orbit-ring--2"><div class="planet planet--venus" data-planet="venus"></div></div>
+        <div class="orbit-ring orbit-ring--3"><div class="planet planet--earth" data-planet="earth"></div></div>
+        <div class="orbit-ring orbit-ring--4"><div class="planet planet--mars" data-planet="mars"></div></div>
+        <div class="orbit-ring orbit-ring--5"><div class="planet planet--jupiter" data-planet="jupiter"></div></div>
+        <div class="orbit-ring orbit-ring--6"><div class="planet planet--saturn" data-planet="saturn"><span class="saturn-ring"></span></div></div>
+      </div>
+
+      <div class="planet-cards" id="planetCards">
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#E3B98C;--c2:#8C6A4A">☉</span>
+          <h3>Mercury</h3>
+          <p class="planet-card-stat">88-day orbit · 167°C swings</p>
+          <p>Closest to the sun, and first on the list for solar-collector outposts that need nothing but raw light.</p>
+        </article>
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#F2D59C;--c2:#C98A4B">♀</span>
+          <h3>Venus</h3>
+          <p class="planet-card-stat">462°C surface · crushing pressure</p>
+          <p>Too hostile below the clouds — but 50km up, the air pressure matches Earth's. Floating cities are on the table.</p>
+        </article>
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#3FE0E5;--c2:#1E5C8C">⊕</span>
+          <h3>Earth</h3>
+          <p class="planet-card-stat">Home · 4.5 billion years running</p>
+          <p>The only data point we have for a civilization that works. Every plan beyond here starts from what we learned here.</p>
+        </article>
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#FF6B4A;--c2:#9C3A22">♂</span>
+          <h3>Mars</h3>
+          <p class="planet-card-stat">225 million km · 24h 37m day</p>
+          <p>The nearest world we could actually live on. The next section is entirely about what that looks like.</p>
+        </article>
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#E3C9A3;--c2:#8C6A3F">♃</span>
+          <h3>Jupiter</h3>
+          <p class="planet-card-stat">79+ moons · no solid surface</p>
+          <p>Not a destination — a gravity well we use to slingshot probes further out for almost no fuel.</p>
+        </article>
+        <article class="planet-card" data-reveal>
+          <span class="planet-card-glyph" style="--c1:#F0DCA8;--c2:#A88846">♄</span>
+          <h3>Saturn</h3>
+          <p class="planet-card-stat">7 ring groups · Titan's thick haze</p>
+          <p>Titan's moon has lakes of liquid methane and an atmosphere thick enough to fly through on muscle power alone.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 3: MARS COLONY -->
+    <!-- ============================= -->
+    <section class="section mars-colony" id="mars" aria-label="Future Mars Colony">
+      <div class="mars-sky" aria-hidden="true"></div>
+      <div class="mars-skyline" aria-hidden="true">
+        <svg viewBox="0 0 1600 500" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+          <!-- energy towers + domes, parallax layer 1 (back) -->
+          <g class="skyline-back" fill="#1B1530">
+            <rect x="60" y="220" width="36" height="280"/>
+            <circle cx="78" cy="220" r="20"/>
+            <rect x="230" y="160" width="26" height="340"/>
+            <polygon points="243,100 215,160 271,160"/>
+            <rect x="420" y="260" width="160" height="240" rx="14"/>
+            <circle cx="500" cy="260" r="80"/>
+            <rect x="700" y="190" width="30" height="310"/>
+            <circle cx="715" cy="190" r="22"/>
+            <rect x="900" y="240" width="140" height="260" rx="60"/>
+            <rect x="1120" y="150" width="22" height="350"/>
+            <polygon points="1131,90 1106,150 1156,150"/>
+            <rect x="1300" y="270" width="170" height="230" rx="16"/>
+            <circle cx="1385" cy="270" r="70"/>
+          </g>
+        </svg>
+      </div>
+
+      <canvas id="droneCanvas" aria-hidden="true"></canvas>
+
+      <div class="mars-content">
+        <div class="section-head section-head--light">
+          <p class="section-eyebrow">SECTION 02 / SETTLEMENT</p>
+          <h2 class="section-title">A City on Mars, 2075</h2>
+          <p class="section-desc">Pressurized domes, vertical farms, and a grid that never sees blackout. Here's what the first real Martian city has to solve.</p>
+        </div>
+
+        <div class="mars-cards">
+          <article class="mars-card" data-reveal>
+            <div class="mars-card-icon" aria-hidden="true">⟁</div>
+            <h3>Transportation</h3>
+            <p>Maglev tunnels link domes underground; electric VTOL skiffs handle surface transit above the dust line.</p>
+          </article>
+          <article class="mars-card" data-reveal>
+            <div class="mars-card-icon" aria-hidden="true">⚡</div>
+            <h3>Energy</h3>
+            <p>Compact fusion cores backed by sub-surface geothermal taps — built to run straight through dust-storm season.</p>
+          </article>
+          <article class="mars-card" data-reveal>
+            <div class="mars-card-icon" aria-hidden="true">⌂</div>
+            <h3>Population</h3>
+            <p>50,000 residents across nine linked domes, with life support engineered for a 2% annual margin of growth.</p>
+          </article>
+          <article class="mars-card" data-reveal>
+            <div class="mars-card-icon" aria-hidden="true">◈</div>
+            <h3>AI Systems</h3>
+            <p>An autonomous grid manages air, water, and crop cycles — flagging failures hours before a human would notice.</p>
+          </article>
+          <article class="mars-card" data-reveal>
+            <div class="mars-card-icon" aria-hidden="true">▣</div>
+            <h3>Architecture</h3>
+            <p>Regolith-printed shells shield against radiation; every dome is grown in layers by robotic printer-arms.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 4: BLACK HOLE EXPERIENCE -->
+    <!-- ============================= -->
+    <section class="section blackhole" id="blackhole" aria-label="The Black Hole">
+      <canvas id="blackholeCanvas"></canvas>
+
+      <div class="blackhole-content">
+        <p class="bh-eyebrow" data-bh-reveal>SECTION 03 / THE EDGE OF KNOWLEDGE</p>
+        <h2 class="bh-title" data-bh-reveal>Where Physics Runs Out</h2>
+        <p class="bh-text" data-bh-reveal>
+          Cross the event horizon and even light can't find its way back out.
+          Everything we know about space, time, and cause-and-effect
+          quietly stops applying.
+        </p>
+        <p class="bh-text bh-text--small" data-bh-reveal>
+          Sagittarius A* · 26,000 light-years from here · 4 million solar masses
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 5: FUTURE TECHNOLOGY -->
+    <!-- ============================= -->
+    <section class="section tech" id="tech" aria-label="Future Technology">
+      <div class="section-bg-stars section-bg-stars--dense" aria-hidden="true"></div>
+
+      <div class="section-head">
+        <p class="section-eyebrow">SECTION 04 / CAPABILITY</p>
+        <h2 class="section-title">The Tools That Get Us There</h2>
+        <p class="section-desc">None of the above works without these five technologies clearing their final hurdles.</p>
+      </div>
+
+      <div class="tech-grid">
+        <article class="tech-card" data-reveal data-tilt>
+          <div class="tech-card-glow" aria-hidden="true"></div>
+          <div class="tech-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><circle cx="24" cy="8" r="2.5" fill="currentColor"/><circle cx="40" cy="24" r="2.5" fill="currentColor"/></svg>
+          </div>
+          <h3>Artificial Intelligence</h3>
+          <p>Mission systems that plan, predict failure, and re-route resources faster than any ground crew could.</p>
+        </article>
+
+        <article class="tech-card" data-reveal data-tilt>
+          <div class="tech-card-glow" aria-hidden="true"></div>
+          <div class="tech-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M12 24a12 12 0 1124 0 12 12 0 01-24 0z" stroke="currentColor" stroke-width="2"/><path d="M8 24h6M34 24h6M24 8v6M24 34v6" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Quantum Computing</h3>
+          <p>Trajectory and materials problems that took supercomputer-months collapse to overnight runs.</p>
+        </article>
+
+        <article class="tech-card" data-reveal data-tilt>
+          <div class="tech-card-glow" aria-hidden="true"></div>
+          <div class="tech-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="5" fill="currentColor"/><ellipse cx="24" cy="24" rx="18" ry="7" stroke="currentColor" stroke-width="2"/><ellipse cx="24" cy="24" rx="7" ry="18" stroke="currentColor" stroke-width="2" opacity="0.6"/></svg>
+          </div>
+          <h3>Fusion Energy</h3>
+          <p>Net-positive reactors small enough to ship, powerful enough to run a colony through total darkness.</p>
+        </article>
+
+        <article class="tech-card" data-reveal data-tilt>
+          <div class="tech-card-glow" aria-hidden="true"></div>
+          <div class="tech-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 4v40M14 44h20M18 4h12" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="14" r="4" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Space Elevators</h3>
+          <p>A carbon-nanotube tether to orbit, cutting launch costs from a fortune to a freight fare.</p>
+        </article>
+
+        <article class="tech-card" data-reveal data-tilt>
+          <div class="tech-card-glow" aria-hidden="true"></div>
+          <div class="tech-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="14" y="18" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="27" r="2" fill="currentColor"/><circle cx="28" cy="27" r="2" fill="currentColor"/><path d="M24 18v-6M16 38v4M32 38v4" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Robotics</h3>
+          <p>Construction crews that don't need air, sleep, or rescue when the work gets dangerous.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 6: TIMELINE -->
+    <!-- ============================= -->
+    <section class="section timeline" id="timeline" aria-label="Future Timeline">
+      <div class="section-head">
+        <p class="section-eyebrow">SECTION 05 / TIMELINE</p>
+        <h2 class="section-title">The Road From Here</h2>
+        <p class="section-desc">A plausible sequence — not a promise, but the order most mission architects agree on.</p>
+      </div>
+
+      <div class="timeline-track">
+        <div class="timeline-line" aria-hidden="true"><div class="timeline-line-fill" id="timelineLineFill"></div></div>
+
+        <div class="timeline-item" data-reveal data-year="2026">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2026</span>
+            <h3>Reusable Heavy Lift</h3>
+            <p>Fully reusable super-heavy rockets make orbital cargo cheap enough to fly weekly, not yearly.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal data-year="2035">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2035</span>
+            <h3>Permanent Lunar Base</h3>
+            <p>A crewed outpost at the lunar south pole runs year-round on harvested ice and solar power.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal data-year="2050">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2050</span>
+            <h3>First Mars Settlement</h3>
+            <p>The first permanent, self-sustaining dome colony breaks ground in Jezero Crater.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal data-year="2075">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2075</span>
+            <h3>Interplanetary Economy</h3>
+            <p>Regular cargo and passenger routes connect Earth, Luna, and Mars on fixed schedules.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal data-year="2100">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2100</span>
+            <h3>Beyond the Belt</h3>
+            <p>Crewed missions push past the asteroid belt, scouting the Jovian moons for the next outpost.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SECTION 7: EXPLORE THE GALAXY -->
+    <!-- ============================= -->
+    <section class="section gallery" id="gallery" aria-label="Explore the Galaxy">
+      <div class="section-head">
+        <p class="section-eyebrow">SECTION 06 / GALLERY</p>
+        <h2 class="section-title">Explore the Galaxy</h2>
+        <p class="section-desc">A few of the views that make the case for going, all by themselves.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="gallery-item gallery-item--wide" data-reveal data-gallery="nebula">
+          <div class="gallery-art gallery-art--nebula" aria-hidden="true"></div>
+          <figcaption><h3>The Nebula Nurseries</h3><p>Where new stars are still being born</p></figcaption>
+        </figure>
+        <figure class="gallery-item" data-reveal data-gallery="rings">
+          <div class="gallery-art gallery-art--rings" aria-hidden="true"></div>
+          <figcaption><h3>Ringed Worlds</h3><p>Ice and rock locked in orbit</p></figcaption>
+        </figure>
+        <figure class="gallery-item" data-reveal data-gallery="redplanet">
+          <div class="gallery-art gallery-art--red" aria-hidden="true"></div>
+          <figcaption><h3>The Red Frontier</h3><p>Our nearest second home</p></figcaption>
+        </figure>
+        <figure class="gallery-item gallery-item--wide" data-reveal data-gallery="cluster">
+          <div class="gallery-art gallery-art--cluster" aria-hidden="true"></div>
+          <figcaption><h3>Deep Field</h3><p>Thousands of galaxies, one frame</p></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- FINAL CTA -->
+    <!-- ============================= -->
+    <section class="section finale" id="finale" aria-label="Closing call to action">
+      <canvas id="finaleCanvas" aria-hidden="true"></canvas>
+      <div class="finale-content">
+        <h2 class="finale-title" data-reveal>The Future Starts Today</h2>
+        <p class="finale-text" data-reveal>Every system above is being built right now, by people who decided waiting was the only unacceptable option.</p>
+        <a href="#hero" class="finale-cta" data-reveal>
+          <span>Return to Earth</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 12 12)"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo-mark">＊</span>
+        <span>BEYOND EARTH</span>
+      </div>
+      <div class="footer-links">
+        <a href="#solar">Solar System</a>
+        <a href="#mars">Mars Colony</a>
+        <a href="#blackhole">Black Hole</a>
+        <a href="#tech">Technology</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+      <div class="footer-social" aria-label="Social links">
+        <a href="#" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H21l-4.6 5.3L21.7 21h-5.6l-4.4-5.7L7 21H4.9l5-5.7L3.5 3h5.6l4 5.2L18.9 3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .26.18.58.69.48A10 10 0 0012 2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Beyond Earth — Built for Techfest. A storytelling concept, not a flight plan.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
